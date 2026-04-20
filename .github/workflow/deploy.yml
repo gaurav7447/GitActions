@@ -1,1 +1,32 @@
+name: Deploy to AWS using Python
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install boto3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{AKIAV5QUKCXGOD3MZC3K }}
+          aws-secret-access-key: ${{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 }}
+          aws-region: ap-south-1
+
+      - name: Run deployment script
+        run: python deploy.py
